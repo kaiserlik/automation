@@ -74,9 +74,11 @@ Select Tech Stack
     Click Button  //span[text()='Потвърди']/parent::button
     Wait Until Page Contains Element  //*/span[text()=' +5']  30s
 Hire Type
-    Click Element  //span[text()='Вид']/parent::span/parent::span/parent::span[@type='button']
+    Wait Until Page Contains Element   //span[text()='Вид']/parent::span/parent::span/parent::span[@type='button']/parent::span  20s
+    Click Element   //span[text()='Вид']/parent::span/parent::span/parent::span[@type='button']/parent::span
     Wait Until Page Contains Element  //span[text()='Потвърди']/parent::button  20s
     Wait Until Page Contains Element  //*/span[contains(text(),'Постоянна работа')]/parent::span/parent::span/parent::span  20s
+    Sleep  1s
     Click Element  //*/span[contains(text(),'Постоянна работа')]/parent::span/parent::span/parent::span
     Wait Until Page Contains Element  //*/span[text()='(1)']  20s
     Click Element  //*/span[contains(text(),'Пълно работно време')]/parent::span/parent::span/parent::span
@@ -89,9 +91,11 @@ Select Remote Interview And Full Remote Control
     Click Element  //*/span[text()='Дистанционно интервю']/parent::span/parent::span/parent::span[@type='button' and @aria-selected='false']
     Wait Until Page Contains Element  //*/span[text()='Дистанционно интервю']/parent::span/parent::span/parent::span[@type='button' and @aria-selected='true']  30s
     Click Element  //*/span[contains(text(),'Работа от вкъщи')]/parent::span/parent::span/parent::div[contains(@class,'selectable')]
-    Wait Until Page Contains Element  //span[text()='Потвърди']/parent::button  20s
-    Wait Until Page Contains Element  //*/span[contains(text(),'Изцяло дистанционна')]/parent::span/parent::span[@type='button' and @aria-selected='false']/parent::span/parent::span  10s
-    Click Element  //*/span[contains(text(),'Изцяло дистанционна')]/parent::span/parent::span[@type='button' and @aria-selected='false']/parent::span/parent::span
+    #Wait Until Page Contains Element  //span[text()='Потвърди']/parent::button  20s
+    Sleep  2s
+    Wait Until Page Contains Element  //*/span[contains(text(),'Работа от вкъщи')]/parent::span[not(contains(@class,'action'))]  20s
+    Wait Until Page Contains Element  //*/span[contains(text(),'Изцяло дистанционна')]/parent::span/parent::span[@type='button' and @aria-selected='false']/parent::span  20s
+    Click Element  //*/span[contains(text(),'Изцяло дистанционна')]/parent::span/parent::span[@type='button' and @aria-selected='false']/parent::span
     Wait Until Page Contains Element  //*/span[text()='Изчисти']/preceding-sibling::div[@class='mdc-button__ripple']/parent::button[@class='mdc-button clear-button']  20s
     Click Button  //span[text()='Потвърди']/parent::button
     Wait Until Page Contains Element  //*/span[contains(text(),'Предишни търсения')]  30s
@@ -111,8 +115,35 @@ Cycle Jobs
     Log To Console  \n title: ${title}
     ${url} =  Get Element Attribute  //*/div[@id='listContainer']/ul/li[not(contains(@class,'promo-container'))][1]//*/a/div/span/following-sibling::span/parent::div/parent::a  href
     @{jobs} =  Get WebElements  //*/span/parent::div/parent::a/parent::div[contains(@class,'left')]/a
-    FOR  ${job}  IN  ${jobs}
+    ${len} =  Get Length  ${jobs}
+    Execute Javascript  window.scrollToElem(window.document.getElementsByClassName('mdc-card'))
+    Log To Console  \n len: ${len}
+    FOR  ${job}  IN  @{jobs}
+        Wait Until Page Contains Element  ${job}  20s
         ${attr} =  Get Element Attribute  ${job}  title
-        Log To Console  \n ${attr}
+        ${url} =  Get Element Attribute  ${job}  href
+        Log To Console  \n ${attr} -> ${url}
+        Go To  ${url}
+        Wait Until Page Contains Element  //*/span[text()='Kандидатствай']/parent::a/span[contains(@class,'ripple')]  20s
+        Check Apply Type
+        Go Back
+        Sleep  2s
+        Execute Javascript  window.scrollByLines(10)
     END
+Apply At Job Page
+    Wait Until Page Contains Element  //*/span[text()='Kандидатствай']/parent::a/span  20s
+    Click Element  //*/span[text()='Kандидатствай']/parent::a/span
+Check Apply Type
+    @{apply_type} =  Get WebElements  //*/span[text()='Kандидатствай']/parent::a/span[contains(@class,'ripple')]
+    ${len_apply_type} =  Get Length  ${apply_type}
+    ${apply_type_slow} =  Get WebElements  //*/span[text()='Бързо кандидатстване']/parent::a/span[contains(@class,'ripple')]
+        #//*/span[text()='Външно кандидатстване']/parent::a/span[contains(@class,'ripple')]
+    ${len_apply_type_slow} =  Get Length  ${apply_type_slow}
+    Log To Console  \n len_apply_type_slow: ${len_apply_type_slow}
+    Log To Console  \n len_apply_type: ${len_apply_type}
+    Run Keyword If  ${len_apply_type} > 0  Fast Apply  ELSE  Slow Apply
+Fast Apply
+    Log To Console  \n Fast Apply (running)
+Slow Apply
+    Log To Console  \n Slow Apply (running)
 #//*/span[contains(text(),'Java') or contains(text(),'Python') or contains(text(),'Scala') or contains(text(),'Spark') or contains(text(),'Hadoop') or contains(text(),'Data Engineer') or contains(text(),'Software Developer') or contains(text(),'Big Data') or contains(text(),'ETL') or contains(text(),'java') or contains(text(),'python') or contains(text(),'scala') or contains(text(),'spark') or contains(text(),'hadoop') or contains(text(),'data engineer') or contains(text(),'software developer') or contains(text(),'big data') or contains(text(),'etl')]
