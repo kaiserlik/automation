@@ -25,19 +25,13 @@ Login
     Wait Until Page Contains Element  //*/span[text()='Потребител']/parent::a/parent::ul/parent::div[@class='mdc-menu mdc-menu-surface mdc-menu-surface--is-open-below mdc-menu-surface--open']/ul/a/span[@class='mdc-deprecated-list-item__ripple']/following-sibling::i/following-sibling::span[text()='Потребител']/preceding-sibling::i/preceding-sibling::span  30s
     Click Element  //*/span[text()='Потребител']/parent::a/parent::ul/parent::div[@class='mdc-menu mdc-menu-surface mdc-menu-surface--is-open-below mdc-menu-surface--open']/ul/a/span[@class='mdc-deprecated-list-item__ripple']/following-sibling::i/following-sibling::span[text()='Потребител']/preceding-sibling::i/preceding-sibling::span/parent::a
     Login While Already At Login Page
-    #Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  30s
-    #Clear Element Text  //*/input[@id='usernameLoginForm']
-    #Input Text  //*/input[@id='usernameLoginForm']  kaiserlik@gmail.com
-    #Clear Element Text  //*/input[@id='passwordLoginForm']
-    #Input Text  //*/input[@id='passwordLoginForm']  blank
-    #Click Button  //*/span[@class='mdc-button__ripple']/following-sibling::span[text()='Вход']/parent::button/parent::center/button
     Go To  https://www.jobs.bg/?subm=1&categories[]=56
 Login While Already At Login Page
     Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  30s
     Clear Element Text  //*/input[@id='usernameLoginForm']
     Input Text  //*/input[@id='usernameLoginForm']  kaiserlik@gmail.com
     Clear Element Text  //*/input[@id='passwordLoginForm']
-    Input Text  //*/input[@id='passwordLoginForm']  blank
+    Input Text  //*/input[@id='passwordLoginForm']  northcarolina7!
     Click Button  //*/span[@class='mdc-button__ripple']/following-sibling::span[text()='Вход']/parent::button/parent::center/button
 Select Roles
     Wait Until Page Contains Element  //*/span[text()='IT Област']  30s
@@ -142,7 +136,26 @@ Cycle Jobs
     FOR  ${job}  IN  @{jobs}
         ${curr_url} =  Get Location
         #Sleep  3s
-        Execute Javascript  window.scrollByLines(10)
+        #Execute Javascript  window.scrollByLines(10)
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
+        Sleep  0.2
+        Execute Javascript  window.scrollByLines(1)
         ${attr} =  Set Variable  ${None}
         ${url} =  Set Variable  ${None}
         Wait Until Page Contains Element  ${job}  20s
@@ -169,10 +182,13 @@ Check Apply Type
     Log To Console  \n len_apply_type_slow: ${len_apply_type3_secondButton}
     Log To Console  \n len_apply_type: ${len_apply_type}
     Log To Console  \n len_apply_type3: ${len_apply_type3}
-    Run Keyword If  ${len_apply_type} > 0  Fast Apply  ELSE IF  ${len_apply_type3_secondButton} > 0 && ${len_apply_type3} > 0  Slow Apply  ELSE IF  ${len_apply_type3} > 0  Apply Type 3
+    Run Keyword If  ${len_apply_type} > 0  Fast Apply  ELSE IF  ${len_apply_type3_secondButton} > 0 and ${len_apply_type3} > 0  Slow Apply  ELSE IF  ${len_apply_type3_secondButton} == 0 and ${len_apply_type3} > 0  Apply Type 3  ELSE IF  ${len_apply_type3_secondButton} > 0 and ${len_apply_type3} == 0  No Apply
+No Apply
+    Log To Console  \n No apply, skipping...
 Fast Apply
     Log To Console  \n Fast Apply (running)
-    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']  20s
+    Execute Javascript  window.scrollToElem(window.document.getElementsByClassName('mdc-button mdc-button--raised theme-promo mdc-button--icon-leading'))
+    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']
     ${len_radio1} =  Get Length  ${radio1}
     @{radio2} =  Get WebElements  //*/label[text()='Съгласен съм']/parent::div/div/input[contains(@id,'consent') and @type='radio']
     ${len_radio2} =  Get Length  ${radio2}
@@ -184,12 +200,17 @@ Fast Apply
     Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  10s
     Wait Until Page Contains Element  //*/input[@id='passwordLoginForm']  10s
     Login While Already At Login Page
+    Sleep  3s
+    ${e} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
+    ${len_e} =  Get Length  ${e}
+    IF  ${len_e} > 0  Run Keyword  Continue Fast Apply
+Continue Fast Apply
+    #begin
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
     Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
-    #3 drop down menus
-    ${dropdowns} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
-    #For each menu
-    Click Element  ${dropdowns[0]}
+    Execute Javascript  window.scrollToElem(window.document.getElementsByClassName('mdc-button mdc-button--raised button-green'))
+    ${elems} =  Get WebElements  //*/div[@class='mdc-select__anchor mdc-ripple-upgraded']
+    Click Element  ${elems[0]}
     Wait Until Page Contains Element  //*/div[@class='mdc-select mdc-select--filled mdc-select--no-label mdc-select--focused mdc-select--activated']  10s
     #3 list items per drop down menu
     ${list_items} =  Get WebElements  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li
@@ -197,12 +218,18 @@ Fast Apply
     Wait Until Page Contains Element  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li[@aria-checked='true']  10s
     #submit
     Click Button  //*/span[text()='Изпрати']/parent::button[@data-action-submit='sendCVForm']
-    Wait Until Page Contains Element  //*/span[text()='Обратно в списъка']/parent::button  20s
-    Click Button  //*/span[text()='Обратно в списъка']/parent::button
-
+    Sleep  3s
+    #Wait Until Page Contains Element  //*/span[text()='Обратно в списъка']/parent::button  20s
+    #@{button_quit} =  Get WebElements  //*/span[text()='Обратно в списъка']/parent::button
+    #${len_button_quit} =  Get Length  ${button_quit}
+    #@{button_quit2} =  Get WebElements  //*/span[text()='Обратно в обявата']/parent::button
+    #${len_button_quit} =  Get Length  ${button_quit2}
+    #IF  ${len_button_quit} > 0  Run Keyword  Wait Until Page Contains Element  //*/span[text()='Обратно в списъка']/parent::button  20s  ELSE IF  ${len_button_quit} > 0  Run Keyword  Wait Until Page Contains Element  //*/span[text()='Обратно в обявата']/parent::button  20s
+    #end
 Slow Apply
     Log To Console  \n Slow Apply (running)
-    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']  20s
+    Execute Javascript  window.scrollToElem(window.document.getElementById('applyButtonContainer'))
+    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']
     ${len_radio1} =  Get Length  ${radio1}
     @{radio2} =  Get WebElements  //*/label[text()='Съгласен съм']/parent::div/div/input[contains(@id,'consent') and @type='radio']
     ${len_radio2} =  Get Length  ${radio2}
@@ -214,6 +241,11 @@ Slow Apply
     Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  10s
     Wait Until Page Contains Element  //*/input[@id='passwordLoginForm']  10s
     Login While Already At Login Page
+    Sleep  3s
+    ${e} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
+    ${len_e} =  Get Length  ${e}
+    IF  ${len_e} > 0  Run Keyword  Continue Slow Apply
+Continue Slow Apply
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
     Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
     #3 drop down menus
@@ -231,7 +263,8 @@ Slow Apply
     Click Button  //*/span[text()='Обратно в списъка']/parent::button
 Apply Type 3
     Log To Console  \n Apply Type 3 (running)
-    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']  20s
+    Execute Javascript  window.scrollToElem(window.document.getElementById('applyButtonContainer'))
+    @{radio1} =  Get WebElements  //*/td[contains(text(),'Запознат съм с')]/preceding-sibling::td/div/div/div/input[@id='company_privacy_consent']
     ${len_radio1} =  Get Length  ${radio1}
     @{radio2} =  Get WebElements  //*/label[text()='Съгласен съм']/parent::div/div/input[contains(@id,'consent') and @type='radio']
     ${len_radio2} =  Get Length  ${radio2}
@@ -243,6 +276,11 @@ Apply Type 3
     Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  10s
     Wait Until Page Contains Element  //*/input[@id='passwordLoginForm']  10s
     Login While Already At Login Page
+    Sleep  3s
+    ${e} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
+    ${len_e} =  Get Length  ${e}
+    IF  ${len_e} > 0  Run Keyword  Continue Type 3 Apply
+Continue Type 3 Apply
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
     Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
     #3 drop down menus
