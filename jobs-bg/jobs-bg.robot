@@ -29,7 +29,7 @@ Login
     #Clear Element Text  //*/input[@id='usernameLoginForm']
     #Input Text  //*/input[@id='usernameLoginForm']  kaiserlik@gmail.com
     #Clear Element Text  //*/input[@id='passwordLoginForm']
-    #Input Text  //*/input[@id='passwordLoginForm']  northcarolina7!
+    #Input Text  //*/input[@id='passwordLoginForm']  blank
     #Click Button  //*/span[@class='mdc-button__ripple']/following-sibling::span[text()='Вход']/parent::button/parent::center/button
     Go To  https://www.jobs.bg/?subm=1&categories[]=56
 Login While Already At Login Page
@@ -37,7 +37,7 @@ Login While Already At Login Page
     Clear Element Text  //*/input[@id='usernameLoginForm']
     Input Text  //*/input[@id='usernameLoginForm']  kaiserlik@gmail.com
     Clear Element Text  //*/input[@id='passwordLoginForm']
-    Input Text  //*/input[@id='passwordLoginForm']  northcarolina7!
+    Input Text  //*/input[@id='passwordLoginForm']  blank
     Click Button  //*/span[@class='mdc-button__ripple']/following-sibling::span[text()='Вход']/parent::button/parent::center/button
 Select Roles
     Wait Until Page Contains Element  //*/span[text()='IT Област']  30s
