@@ -5,7 +5,6 @@ Living in Bulgaria while finding a tech job.
 #dependencies
 
 pip                             22.2.2
-
 python-dateutil                 2.8.2
 
 robotframework                  5.0.1
