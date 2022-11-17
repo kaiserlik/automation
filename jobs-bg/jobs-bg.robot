@@ -6,6 +6,7 @@ Library  Selenium2Library
 *** Variables ***
 *** Test Cases ***
 Automate Job Search
+    #MUST DO: FILL IN THESE FIELDS IN THE CODE: <YOUR_EMAIL>, <YOUR_PASSWORD>, <YOUR_RESUME_TITLE_AS_IT_APPEARS_ON_JOBS_BG>, <YOUR_RESUME_FILE_NAME>
     Open Browser And Go To Job Site
     #Maximize Browser Window
     Login
@@ -29,9 +30,9 @@ Login
 Login While Already At Login Page
     Wait Until Page Contains Element  //*/input[@id='usernameLoginForm']  30s
     Clear Element Text  //*/input[@id='usernameLoginForm']
-    Input Text  //*/input[@id='usernameLoginForm']  kaiserlik@gmail.com
+    Input Text  //*/input[@id='usernameLoginForm']  <YOUR_EMAIL>
     Clear Element Text  //*/input[@id='passwordLoginForm']
-    Input Text  //*/input[@id='passwordLoginForm']  northcarolina7!
+    Input Text  //*/input[@id='passwordLoginForm']  <YOUR_PASSWORD>
     Click Button  //*/span[@class='mdc-button__ripple']/following-sibling::span[text()='Вход']/parent::button/parent::center/button
 Select Roles
     Wait Until Page Contains Element  //*/span[text()='IT Област']  30s
@@ -207,15 +208,16 @@ Fast Apply
 Continue Fast Apply
     #begin
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
-    Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
+    
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_TITLE_AS_IT_APPEARS_ON_JOBS_BG>' and contains(@for,'file3')]  20s
     Execute Javascript  window.scrollToElem(window.document.getElementsByClassName('mdc-button mdc-button--raised button-green'))
     ${elems} =  Get WebElements  //*/div[@class='mdc-select__anchor mdc-ripple-upgraded']
     Click Element  ${elems[0]}
     Wait Until Page Contains Element  //*/div[@class='mdc-select mdc-select--filled mdc-select--no-label mdc-select--focused mdc-select--activated']  10s
     #3 list items per drop down menu
-    ${list_items} =  Get WebElements  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li
+    ${list_items} =  Get WebElements  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li
     Click Element  ${list_items[0]}
-    Wait Until Page Contains Element  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li[@aria-checked='true']  10s
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li[@aria-checked='true']  10s
     #submit
     Click Button  //*/span[text()='Изпрати']/parent::button[@data-action-submit='sendCVForm']
     Sleep  3s
@@ -247,16 +249,16 @@ Slow Apply
     IF  ${len_e} > 0  Run Keyword  Continue Slow Apply
 Continue Slow Apply
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
-    Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_TITLE_AS_IT_APPEARS_ON_JOBS_BG>' and contains(@for,'file3')]  20s
     #3 drop down menus
     ${dropdowns} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
     #For each menu
     Click Element  ${dropdowns[0]}
     Wait Until Page Contains Element  //*/div[@class='mdc-select mdc-select--filled mdc-select--no-label mdc-select--focused mdc-select--activated']  10s
     #3 list items per drop down menu
-    ${list_items} =  Get WebElements  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li
+    ${list_items} =  Get WebElements  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li
     Click Element  ${list_items[0]}
-    Wait Until Page Contains Element  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li[@aria-checked='true']  10s
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li[@aria-checked='true']  10s
     #submit
     Click Button  //*/span[text()='Изпрати']/parent::button[@data-action-submit='sendCVForm']
     Wait Until Page Contains Element  //*/span[text()='Обратно в списъка']/parent::button  20s
@@ -282,16 +284,16 @@ Apply Type 3
     IF  ${len_e} > 0  Run Keyword  Continue Type 3 Apply
 Continue Type 3 Apply
     Wait Until Page Contains Element  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']  20s
-    Wait Until Page Contains Element  //*/label[text()='John Kaiserlik Resume (CV)' and contains(@for,'file3')]  20s
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_TITLE_AS_IT_APPEARS_ON_JOBS_BG>' and contains(@for,'file3')]  20s
     #3 drop down menus
     ${dropdowns} =  Get WebElements  //*/div[@class='fieldcontainer']/div/div[@class='mdc-select mdc-select--filled mdc-select--no-label']
     #For each menu
     Click Element  ${dropdowns[0]}
     Wait Until Page Contains Element  //*/div[@class='mdc-select mdc-select--filled mdc-select--no-label mdc-select--focused mdc-select--activated']  10s
     #3 list items per drop down menu
-    ${list_items} =  Get WebElements  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li
+    ${list_items} =  Get WebElements  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li
     Click Element  ${list_items[0]}
-    Wait Until Page Contains Element  //*/label[text()='john_kaiserlik_resume.pdf']/parent::li[@aria-checked='true']  10s
+    Wait Until Page Contains Element  //*/label[text()='<YOUR_RESUME_FILE_NAME>.pdf']/parent::li[@aria-checked='true']  10s
     #submit
     Click Button  //*/span[text()='Изпрати']/parent::button[@data-action-submit='sendCVForm']
     Wait Until Page Contains Element  //*/span[text()='Обратно в списъка']/parent::button  20s
